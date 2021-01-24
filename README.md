@@ -7,12 +7,17 @@
  - API AccessKey encryption, simple
  - API AccessKey remote retrieving, to do
  - Weather bean, done
+ - Current/Daily, done
+ - Forecast/Hourly, need to upgrade subscription plan
+ - Sunrise/Sunset, other data, to do
+ - Hourly horizontal scrollview, to do
+ - City search auto prompt, to do
  - Json serialization, done
  - Local storage persistence, done
  - Mock data request, done
  - Search screen, done
  - Detail screen, done
- - Flowing image background, done
+ - Flowing image background, done, need nice video format
  - Unit switch widget, done
  - nice icons/ic_launcher, to do
  - RecyclerView, done
@@ -42,3 +47,9 @@
  - comments, simple notes
  - private class, checked
  - imports, checked
+ 
+ ### Demo
+ 
+ ![Search screen](20210124_screen_search.png)
+ 
+ ![Detail screen](20210124_screen_detail.png)
