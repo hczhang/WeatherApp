@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+
+    <string name="input_hint">Enter a location</string>
+    <string name="degree_celsius">&#176;C</string>
+    <string name="degree_fahrenheit">&#176;F</string>
+    <string name="degree_slash">/</string>
+</resources>
