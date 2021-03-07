@@ -8,16 +8,16 @@ import java.util.List;
 public class Hourly {
 
     @SerializedName("time")
-    String time;
+    private String time;
 
     @SerializedName("temperature")
-    String temperature;
+    private String temperature;
 
     @SerializedName("weather_descriptions")
-    List<String> descs;
+    private List<String> descs;
 
     @SerializedName("weather_icons")
-    List<String> icons;
+    private List<String> icons;
 
     @SerializedName("wind_speed")
     int windSpeed;

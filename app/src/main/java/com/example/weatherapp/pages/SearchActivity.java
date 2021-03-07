@@ -4,16 +4,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.weatherapp.R;
 import com.example.weatherapp.api.bean.Weather;
 import com.example.weatherapp.api.WeatherApi;
 import com.example.weatherapp.utils.Preference;
+import com.example.weatherapp.widgets.MaterialSearchBar;
+import com.example.weatherapp.widgets.SimpleSearchBar;
 import com.example.weatherapp.widgets.UnitSwitch;
 
 import java.util.List;
@@ -22,8 +20,8 @@ import java.util.List;
  * The Home/Search activity.
  */
 public class SearchActivity extends BaseActivity {
-    private EditText etInput;
-    private ImageView ivDelete, ivSearch;
+    private MaterialSearchBar msbInput;
+//    private SimpleSearchBar ssbInput;
     private RecyclerView rvWeatherList;
     private UnitSwitch usUnitSwitch;
     private SearchAdapter mAdapter;
@@ -37,9 +35,8 @@ public class SearchActivity extends BaseActivity {
 
     private void initView() {
         setContentView(R.layout.activity_search);
-        etInput = findViewById(R.id.et_input);
-        ivDelete = findViewById(R.id.iv_delete);
-        ivSearch = findViewById(R.id.iv_search);
+        msbInput = findViewById(R.id.msb_search_input);
+//        ssbInput = findViewById(R.id.ssb_search_input);
         rvWeatherList = findViewById(R.id.lv_search_result);
         usUnitSwitch = findViewById(R.id.us_search_unitswitch);
 
@@ -51,23 +48,24 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void initEvents() {
-        // Hides keyboard and make a search.
-        etInput.setOnEditorActionListener((view, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                searchKeyword();
-                return true;
+        msbInput.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
             }
-            return false;
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+                searchKeyword();
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) {
+            }
         });
 
-        // Disables ENTER key.
-        etInput.setOnKeyListener((view, keyCode, event) -> keyCode == KeyEvent.KEYCODE_ENTER);
-
-        // Clears input.
-        ivDelete.setOnClickListener(view -> {etInput.setText(null);});
-
-        // Hides keyboard and make a search.
-        ivSearch.setOnClickListener(view -> searchKeyword());
+//        ssbInput.setOnSearchActionListener(text -> {
+//            searchKeyword();
+//        });
 
         usUnitSwitch.setOnUnitChangeListener(isCelsius -> {
             reloadKeywords();
@@ -77,7 +75,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        etInput.requestFocus();
+//        ssbInput.requestFocus();
         hideSoftKeyboard();
 
         // Reads saved weathers from storage when the app resumes.
@@ -86,6 +84,17 @@ public class SearchActivity extends BaseActivity {
             mAdapter.setWeathers(weathers);
             reloadKeywords();
         }
+    }
+
+    private String getKeyword() {
+        return msbInput.getText();
+//        return ssbInput.getText().toString().trim();
+    }
+
+    private void clearKeyword() {
+        hideSoftKeyboard();
+        msbInput.setText(null);
+//        ssbInput.setText(null);
     }
 
     /**
@@ -122,7 +131,7 @@ public class SearchActivity extends BaseActivity {
      * Searches one location from the network, and adds the result to the search list.
      */
     private void searchKeyword() {
-        String keyword = etInput.getText().toString().trim();
+        String keyword = getKeyword();
         if (keyword.isEmpty()) return;
 
         showProgress();
@@ -130,7 +139,7 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onDataAvailable(Weather weather) {
                 dismissProgress();
-                etInput.setText(null);
+                clearKeyword();
                 mAdapter.pushWeather(weather);
                 rvWeatherList.smoothScrollToPosition(0);
 

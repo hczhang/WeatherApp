@@ -11,19 +11,19 @@ import java.util.List;
 public class Daily {
 
     @SerializedName("date")
-    String date;
+    private String date;
 
     @SerializedName("mintemp")
-    String minTemp;
+    private String minTemp;
 
     @SerializedName("maxtemp")
-    String maxTemp;
+    private String maxTemp;
 
     @SerializedName("avgtemp")
-    String avgTemp;
+    private String avgTemp;
 
     @SerializedName("hourly")
-    List<Hourly> listHourly;
+    private List<Hourly> listHourly;
 
     public String getDate() {
         return date;

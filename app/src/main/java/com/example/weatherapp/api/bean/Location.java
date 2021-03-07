@@ -8,16 +8,16 @@ import java.util.Objects;
 public class Location {
 
     @SerializedName("name")
-    String name;
+    private String name;
 
     @SerializedName("region")
-    String region;
+    private String region;
 
     @SerializedName("country")
-    String country;
+    private String country;
 
     @SerializedName("localtime")
-    String localTime;
+    private String localTime;
 
     public String getName() {
         return name;

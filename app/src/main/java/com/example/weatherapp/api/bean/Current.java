@@ -8,16 +8,16 @@ import java.util.List;
 public class Current {
 
     @SerializedName("temperature")
-    String temperature;
+    private String temperature;
 
     @SerializedName("observation_time")
-    String observationTime;
+    private String observationTime;
 
     @SerializedName("weather_descriptions")
-    List<String> descs;
+    private List<String> descs;
 
     @SerializedName("weather_icons")
-    List<String> icons;
+    private List<String> icons;
 
     @SerializedName("wind_speed")
     int windSpeed;
